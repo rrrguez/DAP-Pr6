@@ -1,31 +1,41 @@
 package pr6;
 
-// Clase Usuario
-abstract class Usuario {
+// Clase usuario
+abstract class User {
+    // Mediador del usuario
     protected Mediator mediator;
-    protected String nombre;
-    protected VentanaChatPrivado ventanaPrivado;
-    protected VentanaChatGrupo ventanaGrupo;
+    // Nombre del usuario
+    protected String name;
+    // Chat privado del usuario
+    protected PrivateChatFrame privateFrame;
+    // Chat de grupo del usuario
+    protected GroupChatFrame groupFrame;
 
-    public Usuario(Mediator mediator, String nombre) {
+    // Constructor de la clase
+    public User(Mediator mediator, String name) {
         this.mediator = mediator;
-        this.nombre = nombre;
-        this.ventanaPrivado = new VentanaChatPrivado(this, null);
-        this.ventanaGrupo = new VentanaChatGrupo(this);
+        this.name = name;
+        // this.ventanaPrivado = new privateChatFrame(this, null);
+        this.groupFrame = new GroupChatFrame(this);
     }
 
-    public String getNombre() {
-        return nombre;
+    // Getter
+    public String getName() {
+        return name;
     }
 
-    public void setUsuario2(Usuario usuario) {
-        this.ventanaPrivado.usuario2 = usuario;
+    // Setter
+    // Se establece el usuario con el que intercambia mensajes en el chat privado
+    public void setUser2(User user) {
+        // this.ventanaPrivado.user2 = user;
+        this.privateFrame = new PrivateChatFrame(this, user);
     }
 
-    public abstract void recibirMensaje(String mensaje, VentanaChat ventana);
+    // Métodos abstractos
+    public abstract void receiveMessage(String mensaje, ChatFrame ventana);
 
-    public abstract void enviarMensajePrivado(String mensaje, VentanaChat ventana);
+    public abstract void sendPrivateMessage(String mensaje, ChatFrame ventana);
 
-    public abstract void enviarMensajeGrupo(String mensaje, VentanaChat ventana);
+    public abstract void sendGroupMessage(String mensaje, ChatFrame ventana);
 
 }
